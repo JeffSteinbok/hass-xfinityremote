@@ -1,0 +1,23 @@
+tune:
+  target:
+    entity:
+      integration: xfinity_remote
+      domain: remote
+  fields:
+    channel:
+      required: true
+      example: "702"
+      selector:
+        text:
+
+send_text:
+  target:
+    entity:
+      integration: xfinity_remote
+      domain: remote
+  fields:
+    text:
+      required: true
+      example: "watch ESPN"
+      selector:
+        text:

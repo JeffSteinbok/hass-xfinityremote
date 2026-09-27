@@ -1,0 +1,14 @@
+{
+  "domain": "xfinity_remote",
+  "name": "Xfinity Remote",
+  "codeowners": ["@jeffsteinbok"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/jeffsteinbok/hass-xfinityremote/blob/main/README.md",
+  "integration_type": "device",
+  "iot_class": "cloud_push",
+  "issue_tracker": "https://github.com/jeffsteinbok/hass-xfinityremote/issues",
+  "loggers": ["custom_components.xfinity_remote"],
+  "requirements": [],
+  "version": "0.1.0"
+}

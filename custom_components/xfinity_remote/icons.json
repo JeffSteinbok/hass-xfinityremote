@@ -1,0 +1,136 @@
+{
+  "entity": {
+    "button": {
+      "up": {
+        "default": "mdi:chevron-up"
+      },
+      "down": {
+        "default": "mdi:chevron-down"
+      },
+      "left": {
+        "default": "mdi:chevron-left"
+      },
+      "right": {
+        "default": "mdi:chevron-right"
+      },
+      "ok": {
+        "default": "mdi:checkbox-blank-circle-outline"
+      },
+      "exit": {
+        "default": "mdi:exit-to-app"
+      },
+      "last": {
+        "default": "mdi:keyboard-return"
+      },
+      "menu": {
+        "default": "mdi:menu"
+      },
+      "guide": {
+        "default": "mdi:television-guide"
+      },
+      "info": {
+        "default": "mdi:information-outline"
+      },
+      "page_up": {
+        "default": "mdi:arrow-up"
+      },
+      "page_down": {
+        "default": "mdi:arrow-down"
+      },
+      "channel_up": {
+        "default": "mdi:menu-up"
+      },
+      "channel_down": {
+        "default": "mdi:menu-down"
+      },
+      "play_pause": {
+        "default": "mdi:play-pause"
+      },
+      "rewind": {
+        "default": "mdi:rewind"
+      },
+      "fast_forward": {
+        "default": "mdi:fast-forward"
+      },
+      "replay": {
+        "default": "mdi:replay"
+      },
+      "record": {
+        "default": "mdi:record-rec"
+      },
+      "voice": {
+        "default": "mdi:microphone"
+      },
+      "key_a": {
+        "default": "mdi:alpha-a-box"
+      },
+      "key_b": {
+        "default": "mdi:alpha-b-box"
+      },
+      "key_c": {
+        "default": "mdi:alpha-c-circle"
+      },
+      "key_d": {
+        "default": "mdi:alpha-d-box"
+      },
+      "number_0": {
+        "default": "mdi:numeric-0"
+      },
+      "number_1": {
+        "default": "mdi:numeric-1"
+      },
+      "number_2": {
+        "default": "mdi:numeric-2"
+      },
+      "number_3": {
+        "default": "mdi:numeric-3"
+      },
+      "number_4": {
+        "default": "mdi:numeric-4"
+      },
+      "number_5": {
+        "default": "mdi:numeric-5"
+      },
+      "number_6": {
+        "default": "mdi:numeric-6"
+      },
+      "number_7": {
+        "default": "mdi:numeric-7"
+      },
+      "number_8": {
+        "default": "mdi:numeric-8"
+      },
+      "number_9": {
+        "default": "mdi:numeric-9"
+      },
+      "tv_power_off": {
+        "default": "mdi:power"
+      },
+      "tv_mute": {
+        "default": "mdi:volume-mute"
+      },
+      "tv_input": {
+        "default": "mdi:video-input-hdmi"
+      },
+      "volume_up": {
+        "default": "mdi:volume-plus"
+      },
+      "volume_down": {
+        "default": "mdi:volume-minus"
+      }
+    },
+    "remote": {
+      "remote": {
+        "default": "mdi:remote-tv"
+      }
+    }
+  },
+  "services": {
+    "tune": {
+      "service": "mdi:numeric"
+    },
+    "send_text": {
+      "service": "mdi:microphone-message"
+    }
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect your Xfinity box",
+        "description": "Choose how Home Assistant should connect to your Xfinity X1 box.",
+        "menu_options": {
+          "pair": "Pair with EasyPair (recommended)",
+          "token": "Paste a token from remote.xfinity.com"
+        }
+      },
+      "token": {
+        "title": "Paste a token",
+        "description": "Sign in at remote.xfinity.com, open the browser dev tools console, run `localStorage.arToken`, and paste the value here.",
+        "data": {
+          "token": "Token"
+        }
+      },
+      "pair_failed": {
+        "title": "Pairing didn't finish",
+        "description": "Submit to get a new code and try again."
+      },
+      "reauth_confirm": {
+        "title": "Re-pair your Xfinity box",
+        "description": "Xfinity stopped accepting Home Assistant's token. Pair again to keep controlling the box."
+      }
+    },
+    "progress": {
+      "wait_for_tv": "Pick up your Xfinity voice remote and say **Easy Pair** to open the EasyPair app on your TV. Enter this code and select **Pair Now**:\n\n## {code}\n\nThis page will continue on its own once the TV confirms (within 3 minutes)."
+    },
+    "error": {
+      "invalid_auth": "Xfinity rejected that token.",
+      "cannot_connect": "Couldn't reach remote.xfinity.com.",
+      "pair_timeout": "The code wasn't entered on the TV within 3 minutes.",
+      "pair_failed": "Xfinity reported an error while pairing."
+    },
+    "abort": {
+      "already_configured": "This Xfinity box is already set up.",
+      "cannot_connect": "Couldn't reach remote.xfinity.com.",
+      "invalid_token": "The token doesn't identify an Xfinity box.",
+      "reauth_successful": "Re-paired successfully.",
+      "wrong_device": "That pairing is for a different Xfinity box than this entry."
+    }
+  },
+  "entity": {
+    "button": {
+      "up": {
+        "name": "Up"
+      },
+      "down": {
+        "name": "Down"
+      },
+      "left": {
+        "name": "Left"
+      },
+      "right": {
+        "name": "Right"
+      },
+      "ok": {
+        "name": "OK"
+      },
+      "exit": {
+        "name": "Exit"
+      },
+      "last": {
+        "name": "Last"
+      },
+      "menu": {
+        "name": "Xfinity menu"
+      },
+      "guide": {
+        "name": "Guide"
+      },
+      "info": {
+        "name": "Info"
+      },
+      "page_up": {
+        "name": "Page up"
+      },
+      "page_down": {
+        "name": "Page down"
+      },
+      "channel_up": {
+        "name": "Channel up"
+      },
+      "channel_down": {
+        "name": "Channel down"
+      },
+      "play_pause": {
+        "name": "Play/pause"
+      },
+      "rewind": {
+        "name": "Rewind"
+      },
+      "fast_forward": {
+        "name": "Fast forward"
+      },
+      "replay": {
+        "name": "Replay"
+      },
+      "record": {
+        "name": "Record"
+      },
+      "voice": {
+        "name": "Voice"
+      },
+      "key_a": {
+        "name": "A"
+      },
+      "key_b": {
+        "name": "B"
+      },
+      "key_c": {
+        "name": "C"
+      },
+      "key_d": {
+        "name": "D"
+      },
+      "number_0": {
+        "name": "0"
+      },
+      "number_1": {
+        "name": "1"
+      },
+      "number_2": {
+        "name": "2"
+      },
+      "number_3": {
+        "name": "3"
+      },
+      "number_4": {
+        "name": "4"
+      },
+      "number_5": {
+        "name": "5"
+      },
+      "number_6": {
+        "name": "6"
+      },
+      "number_7": {
+        "name": "7"
+      },
+      "number_8": {
+        "name": "8"
+      },
+      "number_9": {
+        "name": "9"
+      },
+      "tv_power_off": {
+        "name": "TV power off"
+      },
+      "tv_mute": {
+        "name": "Mute"
+      },
+      "tv_input": {
+        "name": "TV input"
+      },
+      "volume_up": {
+        "name": "Volume up"
+      },
+      "volume_down": {
+        "name": "Volume down"
+      }
+    }
+  },
+  "services": {
+    "tune": {
+      "name": "Tune to channel",
+      "description": "Types a channel number on the Xfinity box.",
+      "fields": {
+        "channel": {
+          "name": "Channel",
+          "description": "Channel number, e.g. 702."
+        }
+      }
+    },
+    "send_text": {
+      "name": "Send text command",
+      "description": "Sends a voice-style command, as if spoken into the voice remote.",
+      "fields": {
+        "text": {
+          "name": "Text",
+          "description": "What you'd say, e.g. \"watch ESPN\" or \"open Netflix\"."
+        }
+      }
+    }
+  }
+}
