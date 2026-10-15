@@ -1,0 +1,46 @@
+name: Feature Request
+description: Suggest a new command, entity, or behavior.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem description
+      description: A clear and concise description of the problem or missing feature.
+      placeholder: "I'd like to be able to [...] from Home Assistant"
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you'd like
+      description: A clear and concise description of what you want to happen.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: web_remote
+    attributes:
+      label: Web remote
+      description: >
+        This integration can only do what the [Xfinity web remote](https://remote.xfinity.com) can do.
+      options:
+        - label: The web remote can already do this (if not, it's probably not possible here either).
+          required: false
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Describe alternatives you've considered
+      description: A clear and concise description of any alternative solutions or features you've considered.
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add any other context or screenshots about the feature request here.
+    validations:
+      required: false

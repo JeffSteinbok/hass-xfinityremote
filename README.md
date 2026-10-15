@@ -154,6 +154,9 @@ data:
 
 ## Debugging
 
+Use the **Diagnostics** feature in Home Assistant to get diagnostics from the integration.
+Your token and account/device identifiers are redacted automatically.
+
 In your `configuration.yaml` file, add this:
 
 ```yaml
@@ -164,18 +167,28 @@ logger:
 
 Now restart Home Assistant and do whatever isn't working.
 
+##### Download diagnostics (`.json` file)
+
+1. In HA, open `Settings`
+2. Click `Devices & services`
+3. Click `Xfinity Remote`
+4. Click the three-dot menu (⋮) on the entry and click `Download diagnostics`
+
 ##### Download the full logs
 
 Note that these may contain sensitive information, so do always check before sending them to
-someone. In particular, never share your token.
+someone. In particular, never share your token (the long string starting with `eyJ`).
 
 1. In HA, open `Settings`
 2. Click `System`
 3. Click `Logs`
 4. Click `Download full log`
 
-Then create an [issue](https://github.com/JeffSteinbok/hass-xfinityremote/issues) with the
-lines related to `xfinity_remote` and what you were trying to do.
+Then [open a bug report](https://github.com/JeffSteinbok/hass-xfinityremote/issues/new/choose)
+with the diagnostics file, the lines related to `xfinity_remote`, and what you were trying to do.
+
+To report a security issue, please follow [SECURITY.md](SECURITY.md) instead of opening a
+public issue.
 
 ## How It Works
 
@@ -192,10 +205,6 @@ The integration talks to the same endpoints the web remote at remote.xfinity.com
 
 ## Contributing
 
-I'm always happy to have people add features via Pull Request. To set up a dev environment
-and run the tests:
-
-```bash
-python3.13 -m venv .venv && .venv/bin/pip install -r requirements.test.txt pylint
-.venv/bin/pytest
-```
+I'm always happy to have people add features via Pull Request. See
+[CONTRIBUTING.md](CONTRIBUTING.md) for how to set up a dev environment, run the tests, and
+try changes against a real box. Please follow the [Code of Conduct](CODE_OF_CONDUCT.md).

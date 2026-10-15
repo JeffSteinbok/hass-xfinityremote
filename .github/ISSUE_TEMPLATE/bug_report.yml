@@ -1,0 +1,113 @@
+name: Bug Report
+description: Something isn't working with the integration.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## ⚠️ Logs and diagnostics are essential
+
+        This integration talks to an unofficial Xfinity API, so most problems can only be diagnosed from what Xfinity actually returned. Please follow the [debugging instructions](https://github.com/JeffSteinbok/hass-xfinityremote?tab=readme-ov-file#debugging) to collect:
+        1. **Diagnostics JSON**: Settings → Devices & services → Xfinity Remote → ⋮ → Download diagnostics
+        2. **Debug logs**: enable debug logging, reproduce the issue, then download the full log
+
+        > [!CAUTION]
+        > **Never post your token.** Diagnostics redact it automatically, but logs you copy by hand might not. Remove anything starting with `eyJ` before posting.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Integration Version
+      description: Find it in HACS → Xfinity Remote, or in Settings → Devices & services → Xfinity Remote.
+      placeholder: e.g. 0.1.1
+    validations:
+      required: true
+
+  - type: input
+    id: ha_version
+    attributes:
+      label: Home Assistant Version
+      description: Settings → About.
+      placeholder: e.g. 2026.10.1
+    validations:
+      required: true
+
+  - type: dropdown
+    id: setup_method
+    attributes:
+      label: How did you set it up?
+      options:
+        - EasyPair (code on the TV)
+        - Paste a token
+        - Not set up yet / setup is what's failing
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: To Reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. Call remote.send_command with '...'
+        2. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      description: >
+        Attach your diagnostics JSON file here. The token and account identifiers are redacted automatically.
+        See [how to download diagnostics](https://github.com/JeffSteinbok/hass-xfinityremote?tab=readme-ov-file#debugging).
+        If setup itself is failing and there's no entry to download from, write "none".
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Debug Logs
+      description: >
+        Enable debug logging, reproduce the issue, then paste the lines mentioning `xfinity_remote` here.
+        See [debugging instructions](https://github.com/JeffSteinbok/hass-xfinityremote?tab=readme-ov-file#debugging).
+      render: text
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Checklist
+      options:
+        - label: I'm running the [latest release](https://github.com/JeffSteinbok/hass-xfinityremote/releases/latest).
+          required: true
+        - label: The [Xfinity web remote](https://remote.xfinity.com) works for this box right now.
+          required: true
+        - label: I have checked that my logs and diagnostics don't contain my token.
+          required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here (box model, how many boxes on the account, screenshots).
+    validations:
+      required: false

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/JeffSteinbok/hass-xfinityremote/security/policy
+    about: Please report security issues privately, not as a public issue.
+  - name: Problem with Xfinity's own service, box, or web remote
+    url: https://www.xfinity.com/support
+    about: This integration is unofficial. Outages or problems with remote.xfinity.com itself are for Comcast.
