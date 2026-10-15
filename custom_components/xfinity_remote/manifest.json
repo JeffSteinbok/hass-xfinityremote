@@ -10,5 +10,5 @@
   "issue_tracker": "https://github.com/jeffsteinbok/hass-xfinityremote/issues",
   "loggers": ["custom_components.xfinity_remote"],
   "requirements": [],
-  "version": "0.1.0"
+  "version": "0.1.1"
 }
