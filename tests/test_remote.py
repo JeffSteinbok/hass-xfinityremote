@@ -7,7 +7,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError, ServiceValidationError
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.xfinity_remote.api import XfinityRemoteAuthError
+from custom_components.xfinity_remote.api import XfinityRemoteAuthError, XfinityRemoteError
 from custom_components.xfinity_remote.const import CONF_DEVICE_NAME, CONF_TOKEN, DOMAIN
 
 from .conftest import DEVICE_ID, make_token
@@ -71,9 +71,45 @@ async def test_button_press(hass: HomeAssistant, setup) -> None:
     setup.send_cec_key.assert_called_once_with("MUTE", "ON")
 
 
-async def test_auth_error_on_command_starts_reauth(hass: HomeAssistant, setup) -> None:
-    setup.send_key.side_effect = XfinityRemoteAuthError("expired")
-    with pytest.raises(HomeAssistantError):
+def _reauth_started(hass: HomeAssistant) -> bool:
+    return any(f["context"]["source"] == "reauth" for f in hass.config_entries.flow.async_progress())
+
+
+async def test_rejected_command_refreshes_and_retries(hass: HomeAssistant, setup) -> None:
+    setup.send_key.side_effect = [XfinityRemoteAuthError("rejected"), None]
+    refreshes = setup.refresh_token.call_count
+
+    await hass.services.async_call("button", "press", {"entity_id": "button.family_room_ok"}, blocking=True)
+    await hass.async_block_till_done()
+
+    assert setup.send_key.call_args_list == [call("ENTER")] * 2
+    assert setup.refresh_token.call_count == refreshes + 1
+    assert not _reauth_started(hass)
+
+
+async def test_rejected_again_after_refresh_does_not_reauth(hass: HomeAssistant, setup) -> None:
+    setup.send_key.side_effect = XfinityRemoteAuthError("rejected")
+    with pytest.raises(HomeAssistantError, match="command failed"):
         await hass.services.async_call("button", "press", {"entity_id": "button.family_room_ok"}, blocking=True)
     await hass.async_block_till_done()
-    assert any(f["context"]["source"] == "reauth" for f in hass.config_entries.flow.async_progress())
+    assert setup.send_key.call_count == 2
+    assert not _reauth_started(hass)
+
+
+async def test_refresh_rejected_after_command_starts_reauth(hass: HomeAssistant, setup) -> None:
+    setup.send_key.side_effect = XfinityRemoteAuthError("rejected")
+    setup.refresh_token.side_effect = XfinityRemoteAuthError("expired")
+    with pytest.raises(HomeAssistantError, match="re-pair"):
+        await hass.services.async_call("button", "press", {"entity_id": "button.family_room_ok"}, blocking=True)
+    await hass.async_block_till_done()
+    assert setup.send_key.call_count == 1
+    assert _reauth_started(hass)
+
+
+async def test_refresh_network_error_after_command_does_not_reauth(hass: HomeAssistant, setup) -> None:
+    setup.send_key.side_effect = XfinityRemoteAuthError("rejected")
+    setup.refresh_token.side_effect = XfinityRemoteError("down")
+    with pytest.raises(HomeAssistantError, match="command failed"):
+        await hass.services.async_call("button", "press", {"entity_id": "button.family_room_ok"}, blocking=True)
+    await hass.async_block_till_done()
+    assert not _reauth_started(hass)

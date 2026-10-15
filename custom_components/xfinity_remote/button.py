@@ -58,6 +58,6 @@ class XfinityKeyButton(XfinityRemoteEntity, ButtonEntity):
     async def async_press(self) -> None:
         """Send the key."""
         if self._key in CEC_KEYS:
-            await self._async_call(self._client.send_cec_key(*CEC_KEYS[self._key]))
+            await self._async_call(lambda: self._client.send_cec_key(*CEC_KEYS[self._key]))
         else:
-            await self._async_call(self._client.send_key(KEYS[self._key]))
+            await self._async_call(lambda: self._client.send_key(KEYS[self._key]))

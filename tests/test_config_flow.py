@@ -33,6 +33,23 @@ async def test_easypair_creates_entry(hass: HomeAssistant, mock_client) -> None:
     assert result["result"].unique_id == DEVICE_ID
 
 
+async def test_device_name_from_only_device(hass: HomeAssistant, mock_client) -> None:
+    # The device list's ids don't match the token's xboDeviceId.
+    mock_client.get_devices.return_value = [{"id": "c91f0f09", "name": "Den"}]
+    result = await _start_pairing(hass)
+    await hass.async_block_till_done()
+    result = await hass.config_entries.flow.async_configure(result["flow_id"])
+    assert result["title"] == "Den"
+
+
+async def test_device_name_unknown_with_several_devices(hass: HomeAssistant, mock_client) -> None:
+    mock_client.get_devices.return_value = [{"id": "a", "name": "Den"}, {"id": "b", "name": "Office"}]
+    result = await _start_pairing(hass)
+    await hass.async_block_till_done()
+    result = await hass.config_entries.flow.async_configure(result["flow_id"])
+    assert result["title"] == "Xfinity Remote"
+
+
 async def test_easypair_timeout_then_retry(hass: HomeAssistant, mock_client) -> None:
     mock_client.confirm_pairing.return_value = None
     with patch("custom_components.xfinity_remote.config_flow.PAIRING_TIMEOUT_SECONDS", 0.05):

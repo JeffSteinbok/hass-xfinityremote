@@ -1,5 +1,7 @@
 """API client tests against a mocked HTTP layer."""
 
+import asyncio
+
 import aiohttp
 import pytest
 from aioresponses import aioresponses
@@ -65,6 +67,35 @@ async def test_refresh_updates_token() -> None:
             mock.post(f"{BASE_URL}/api/v1/auth/token/refresh", payload={"arToken": "new", "refreshIntervalMs": 1})
             assert await client.refresh_token() == "new"
             assert client.token == "new"
+
+
+async def test_refresh_without_token_is_not_an_auth_error() -> None:
+    async with aiohttp.ClientSession() as session:
+        client = XfinityRemoteClient(session, "old")
+        with aioresponses() as mock:
+            mock.post(f"{BASE_URL}/api/v1/auth/token/refresh", payload={"msg": "maintenance"})
+            with pytest.raises(XfinityRemoteError) as err:
+                await client.refresh_token()
+            assert not isinstance(err.value, XfinityRemoteAuthError)
+            assert client.token == "old"
+
+
+async def test_auth_error_includes_response() -> None:
+    async with aiohttp.ClientSession() as session:
+        client = XfinityRemoteClient(session, "tok")
+        with aioresponses() as mock:
+            mock.post(f"{BASE_URL}/api/v1/processKey", status=500, payload={"status": "EXPIRED-XAPI-TOKEN"})
+            with pytest.raises(XfinityRemoteAuthError, match=r"\(500\): .*EXPIRED-XAPI-TOKEN"):
+                await client.send_key("OK")
+
+
+async def test_timeout_message_is_not_empty() -> None:
+    async with aiohttp.ClientSession() as session:
+        client = XfinityRemoteClient(session, "tok")
+        with aioresponses() as mock:
+            mock.post(f"{BASE_URL}/api/v1/processKey", exception=asyncio.TimeoutError())
+            with pytest.raises(XfinityRemoteError, match="TimeoutError"):
+                await client.send_key("OK")
 
 
 @pytest.mark.parametrize(

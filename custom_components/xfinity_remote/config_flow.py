@@ -181,4 +181,8 @@ class XfinityRemoteConfigFlow(ConfigFlow, domain=DOMAIN):
         except XfinityRemoteError as err:
             _LOGGER.debug("Could not list devices: %s", err)
             return None
-        return next((d.get("name") for d in devices if d.get("id") == device_id), None)
+        if name := next((d.get("name") for d in devices if d.get("id") == device_id), None):
+            return name
+        # The device list uses a different id than the token's xboDeviceId, so the match
+        # above usually misses. With a single box on the account, it has to be that one.
+        return devices[0].get("name") if len(devices) == 1 else None
