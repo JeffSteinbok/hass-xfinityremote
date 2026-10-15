@@ -85,13 +85,13 @@ class XfinityRemote(XfinityRemoteEntity, RemoteEntity):
 
     async def async_send_text(self, text: str) -> None:
         """Send a voice-style text command such as "watch ESPN"."""
-        await self._async_call(self._client.send_text(text))
+        await self._async_call(lambda: self._client.send_text(text))
 
     async def _async_press(self, press: str | tuple[str, str]) -> None:
         if isinstance(press, tuple):
-            await self._async_call(self._client.send_cec_key(*press))
+            await self._async_call(lambda: self._client.send_cec_key(*press))
         else:
-            await self._async_call(self._client.send_key(press))
+            await self._async_call(lambda: self._client.send_key(press))
 
 
 def _resolve(command: str) -> list[str | tuple[str, str]]:

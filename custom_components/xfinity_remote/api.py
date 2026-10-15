@@ -159,10 +159,11 @@ class XfinityRemoteClient:
                         data = text
                 status = resp.status
         except (aiohttp.ClientError, asyncio.TimeoutError) as err:
-            raise XfinityRemoteError(f"{method} {path} failed: {err}") from err
+            # Timeouts stringify to "", so fall back to the exception type.
+            raise XfinityRemoteError(f"{method} {path} failed: {str(err) or type(err).__name__}") from err
 
         if status == 401 or (isinstance(data, dict) and data.get("status") in EXPIRED_TOKEN_STATUSES):
-            raise XfinityRemoteAuthError(f"{method} {path} rejected the token ({status})")
+            raise XfinityRemoteAuthError(f"{method} {path} rejected the token ({status}): {data}")
         if status >= 400:
             raise XfinityRemoteError(f"{method} {path} returned {status}: {data}")
 
@@ -212,7 +213,8 @@ class XfinityRemoteClient:
             "POST", "/api/v1/auth/token/refresh", token=self._require_token()
         )
         if not isinstance(data, dict) or not data.get("arToken"):
-            raise XfinityRemoteAuthError(f"Unexpected refresh response: {data}")
+            # A 2xx without a token is a server problem, not a rejection; don't force re-pairing.
+            raise XfinityRemoteError(f"Unexpected refresh response: {data}")
         self.token = data["arToken"]
         return self.token
 

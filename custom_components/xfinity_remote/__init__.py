@@ -50,7 +50,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: XfinityRemoteConfigEntry
     except XfinityRemoteError as err:
         raise ConfigEntryNotReady(str(err)) from err
 
-    _async_save_token(hass, entry, client.token)
+    async_save_token(hass, entry, client.token)
 
     info = decode_token(client.token)
     entry.runtime_data = XfinityRemoteData(
@@ -76,7 +76,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: XfinityRemoteConfigEntry
             # Transient; the token is good for months, so just try again next interval.
             _LOGGER.warning("Xfinity token refresh failed: %s", err)
             return
-        _async_save_token(hass, entry, client.token)
+        async_save_token(hass, entry, client.token)
 
     entry.async_on_unload(async_track_time_interval(hass, _async_refresh, interval))
 
@@ -90,7 +90,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: XfinityRemoteConfigEntr
 
 
 @callback
-def _async_save_token(hass: HomeAssistant, entry: ConfigEntry, token: str | None) -> None:
+def async_save_token(hass: HomeAssistant, entry: ConfigEntry, token: str | None) -> None:
     """Persist a refreshed token so it survives restarts."""
     if token and token != entry.data.get(CONF_TOKEN):
         hass.config_entries.async_update_entry(entry, data={**entry.data, CONF_TOKEN: token})
